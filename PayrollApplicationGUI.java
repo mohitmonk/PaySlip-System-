@@ -17,7 +17,7 @@ public class PayrollApplicationGUI extends JFrame {
         setTitle("Payroll Application");
         setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Center the window
+        setLocationRelativeTo(null); 
         setResizable(false);
 
         initComponents();
@@ -68,34 +68,30 @@ public class PayrollApplicationGUI extends JFrame {
         JPanel outputPanel = new JPanel(new GridLayout(12, 2, 5, 5)); // Increased rows to accommodate all payroll elements
         outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         outputPanel.add(grossSalaryLabel);
-        outputPanel.add(new JLabel()); // Empty label for Gross Salary value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(hraLabel);
-        outputPanel.add(new JLabel()); // Empty label for HRA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(taLabel);
-        outputPanel.add(new JLabel()); // Empty label for TA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(maLabel);
-        outputPanel.add(new JLabel()); // Empty label for MA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(daLabel);
-        outputPanel.add(new JLabel()); // Empty label for DA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(pfLabel);
-        outputPanel.add(new JLabel()); // Empty label for PF value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(taxLabel);
-        outputPanel.add(new JLabel()); // Empty label for Tax value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(netSalaryLabel);
-        outputPanel.add(new JLabel()); // Empty label for Net Salary value
+        outputPanel.add(new JLabel()); 
         
         JPanel infoPanel = new JPanel(new GridLayout(4, 1));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10)); // Increased bottom margin
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10)); 
         infoPanel.add(companyInfoLabelName);
         infoPanel.add(companyInfoLabelEmail);
         infoPanel.add(companyInfoLabelAddress);
         infoPanel.add(dateLabel);
-        
-        // Divide input and output with horizontal line
         JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
         separator1.setPreferredSize(new Dimension(400, 1));
-        
-        // Divide output and company info with horizontal line
         JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
         separator2.setPreferredSize(new Dimension(400, 1));
         
@@ -105,20 +101,11 @@ public class PayrollApplicationGUI extends JFrame {
         mainPanel.add(calculatePanel, BorderLayout.CENTER);
         mainPanel.add(outputPanel, BorderLayout.AFTER_LAST_LINE);
         mainPanel.add(separator2, BorderLayout.SOUTH);
-        mainPanel.add(infoPanel, BorderLayout.WEST); // Moved company details section below the output
+        mainPanel.add(infoPanel, BorderLayout.WEST); 
         
         JPanel containerPanel = new JPanel(new BorderLayout());
         containerPanel.add(mainPanel, BorderLayout.NORTH);
-        
-        // Heading Panel below the button
-        // JPanel headingPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        // JLabel headingLabel = new JLabel("Payroll Details");
-        // headingLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        // headingPanel.add(headingLabel);
-        // // containerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
-        // containerPanel.add(headingPanel, BorderLayout.BEFORE_FIRST_LINE);
-        
-        // Increase frame size
+    
         setSize(800, 700);
         
         add(containerPanel);
@@ -150,7 +137,6 @@ public class PayrollApplicationGUI extends JFrame {
             double tax = computeTax(gs);
             double ns = gs - pf - tax;
 
-            // Set computed values to labels
             setLabelText(grossSalaryLabel, currencyFormat(gs));
             setLabelText(hraLabel, currencyFormat(hra));
             setLabelText(taLabel, currencyFormat(ta));
