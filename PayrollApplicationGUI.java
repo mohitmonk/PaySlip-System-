@@ -17,11 +17,20 @@ public class PayrollApplicationGUI extends JFrame {
         setTitle("Payroll Application");
         setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Center the window
+        setLocationRelativeTo(null);
         setResizable(false);
         initComponents();
         initLayout();
         addActionListeners();
+        setVisible(true);
+    }
+        setLocationRelativeTo(null); 
+        setResizable(false);
+
+        initComponents();
+        initLayout();
+        addActionListeners();
+
         setVisible(true);
     }
     private void initComponents() {
@@ -32,10 +41,8 @@ public class PayrollApplicationGUI extends JFrame {
         nameField = new JTextField(20);
         salaryField = new JTextField(10);
         calculateButton = new JButton("Calculate");
-
         empname = new JLabel("Employee Name: ");
         empid = new JLabel("Employee ID: ");
-
         grossSalaryLabel = new JLabel("Gross Salary:");
         hraLabel = new JLabel("HRA:");
         taLabel = new JLabel("TA:");
@@ -44,8 +51,6 @@ public class PayrollApplicationGUI extends JFrame {
         pfLabel = new JLabel("PF:");
         taxLabel = new JLabel("Tax:");
         netSalaryLabel = new JLabel("Net Salary:");
-
-        // Pre-filled company information
         companyInfoLabelName = new JLabel("Company Name: DIT University");
         companyInfoLabelEmail = new JLabel("Company: acad9@dituniversity.edu.in ");
         companyInfoLabelAddress = new JLabel("Address: Mussoorie, Diversion Road, Uttarakhand 248009");
@@ -65,40 +70,60 @@ public class PayrollApplicationGUI extends JFrame {
         JPanel calculatePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         calculatePanel.add(calculateButton);
         
-        JPanel outputPanel = new JPanel(new GridLayout(12, 2, 5, 5)); // Increased rows to accommodate all payroll elements
+        JPanel outputPanel = new JPanel(new GridLayout(12, 2, 5, 5)); 
         outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         outputPanel.add(empname);
-        outputPanel.add(new JLabel()); //Empty Label for Emp Name
+        outputPanel.add(new JLabel()); 
         outputPanel.add(empid);
-        outputPanel.add(new JLabel()); //Empty Label for Emp id
+        outputPanel.add(new JLabel()); 
         outputPanel.add(grossSalaryLabel);
-        outputPanel.add(new JLabel()); // Empty label for Gross Salary value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(hraLabel);
-        outputPanel.add(new JLabel()); // Empty label for HRA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(taLabel);
-        outputPanel.add(new JLabel()); // Empty label for TA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(maLabel);
-        outputPanel.add(new JLabel()); // Empty label for MA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(daLabel);
-        outputPanel.add(new JLabel()); // Empty label for DA value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(pfLabel);
-        outputPanel.add(new JLabel()); // Empty label for PF value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(taxLabel);
-        outputPanel.add(new JLabel()); // Empty label for Tax value
+        outputPanel.add(new JLabel()); 
         outputPanel.add(netSalaryLabel);
-        outputPanel.add(new JLabel()); // Empty label for Net Salary value
+        outputPanel.add(new JLabel()); 
         JPanel infoPanel = new JPanel(new GridLayout(4, 1));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10)); // Increased bottom margin
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10)); 
+        outputPanel.add(grossSalaryLabel);
+        outputPanel.add(new JLabel()); 
+        outputPanel.add(hraLabel);
+        outputPanel.add(new JLabel()); 
+        outputPanel.add(taLabel);
+        outputPanel.add(new JLabel()); 
+        outputPanel.add(maLabel);
+        outputPanel.add(new JLabel()); 
+        outputPanel.add(daLabel);
+        outputPanel.add(new JLabel()); 
+        outputPanel.add(pfLabel);
+        outputPanel.add(new JLabel()); 
+        outputPanel.add(taxLabel);
+        outputPanel.add(new JLabel()); 
+        outputPanel.add(netSalaryLabel);
+        outputPanel.add(new JLabel()); 
+        
+        JPanel infoPanel = new JPanel(new GridLayout(4, 1));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10)); 
         infoPanel.add(companyInfoLabelName);
         infoPanel.add(companyInfoLabelEmail);
         infoPanel.add(companyInfoLabelAddress);
         infoPanel.add(dateLabel);
-        
-        // Divide input and output with horizontal line
         JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
         separator1.setPreferredSize(new Dimension(400, 1));
         
-        // Divide output and company info with horizontal line
+    
+        JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
+        separator1.setPreferredSize(new Dimension(400, 1));
+
         JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
         separator2.setPreferredSize(new Dimension(400, 1));
         
@@ -108,20 +133,16 @@ public class PayrollApplicationGUI extends JFrame {
         mainPanel.add(calculatePanel, BorderLayout.CENTER);
         mainPanel.add(outputPanel, BorderLayout.AFTER_LAST_LINE);
         mainPanel.add(separator2, BorderLayout.SOUTH);
+
         mainPanel.add(infoPanel, BorderLayout.WEST); // Moved company details section below the output
         
         JPanel containerPanel = new JPanel(new BorderLayout());
         containerPanel.add(mainPanel, BorderLayout.NORTH);
         
-        // Heading Panel below the button
-        // JPanel headingPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        // JLabel headingLabel = new JLabel("Payroll Details");
-        // headingLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        // headingPanel.add(headingLabel);
-        // // containerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
-        // containerPanel.add(headingPanel, BorderLayout.BEFORE_FIRST_LINE);
+        mainPanel.add(infoPanel, BorderLayout.WEST); 
         
-        // Increase frame size
+        JPanel containerPanel = new JPanel(new BorderLayout());
+        containerPanel.add(mainPanel, BorderLayout.NORTH);
         setSize(800, 700);
         
         add(containerPanel);
@@ -143,8 +164,6 @@ public class PayrollApplicationGUI extends JFrame {
             String idText = idField.getText();
             String name = properCase(nameField.getText());
             String salaryText = salaryField.getText();
-    
-            // Check if any of the input fields are empty
             if (idText.isEmpty() || name.isEmpty() || salaryText.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill in all the fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -153,7 +172,6 @@ public class PayrollApplicationGUI extends JFrame {
             int id = Integer.parseInt(idText);
             double basicSalary = Double.parseDouble(salaryText);
     
-            // Ensure basic salary is non-negative
             if (basicSalary < 0) {
                 JOptionPane.showMessageDialog(this, "Basic salary cannot be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -167,8 +185,6 @@ public class PayrollApplicationGUI extends JFrame {
             double gs = basicSalary + hra + da + ta + ma;
             double tax = computeTax(gs);
             double ns = gs - pf - tax;
-    
-            // Set computed values to labels
             setLabelText(grossSalaryLabel, currencyFormat(gs));
             setLabelText(hraLabel, currencyFormat(hra));
             setLabelText(taLabel, currencyFormat(ta));
@@ -213,6 +229,7 @@ public class PayrollApplicationGUI extends JFrame {
     }
 
     private String currencyFormat(double val) {
+
         Locale indiaLocale = new Locale("en", "IN");
         NumberFormat obj = NumberFormat.getCurrencyInstance(indiaLocale);
         return obj.format(val);
@@ -223,6 +240,16 @@ public class PayrollApplicationGUI extends JFrame {
         return dateFormat.format(new Date());
     }
     
+
+        NumberFormat obj = NumberFormat.getCurrencyInstance(Locale.US);
+        return obj.format(val);
+    }
+
+    private String getCurrentDate() {
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
+        return dateFormat.format(new Date());
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
