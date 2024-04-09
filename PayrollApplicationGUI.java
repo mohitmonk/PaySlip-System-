@@ -1,95 +1,164 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileOutputStream;
 
 public class PayrollApplicationGUI extends JFrame {
-    private JLabel idLabel, nameLabel, salaryLabel, companyNameLabel, companyAddresslabel, dateLabel;
+    private JLabel idLabel, nameLabel, salaryLabel, companyInfoLabelName,companyInfoLabelAddress,companyInfoLabelEmail ,dateLabel, empname,empid;
     private JTextField idField, nameField, salaryField;
-    private JButton calculateButton, generatePDFButton;
-    private JTextArea resultArea;
-    private Locale locale;
+    private JButton calculateButton;
+    private JLabel grossSalaryLabel, hraLabel, taLabel, maLabel, daLabel, pfLabel, taxLabel, netSalaryLabel;
 
     public PayrollApplicationGUI() {
         setTitle("Payroll Application");
-        setSize(600, 500);
+        setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
-
-        // Initialize locale
-        locale = Locale.getDefault();
-
+        setLocationRelativeTo(null); // Center the window
+        setResizable(false);
+        initComponents();
+        initLayout();
+        addActionListeners();
+        setVisible(true);
+    }
+    private void initComponents() {
         idLabel = new JLabel("Employee ID:");
         nameLabel = new JLabel("Name:");
         salaryLabel = new JLabel("Basic Salary:");
-        companyNameLabel = new JLabel("Company Name: DIT University");
-        companyAddresslabel = new JLabel("Address: Mussorie, Diversion Road, Uttarakhand(248009)");
-        dateLabel = new JLabel("Date: " + dateFormat());
-
-        idField = new JTextField();
-        nameField = new JTextField();
-        salaryField = new JTextField();
-
+        idField = new JTextField(10);
+        nameField = new JTextField(20);
+        salaryField = new JTextField(10);
         calculateButton = new JButton("Calculate");
-        generatePDFButton = new JButton("Generate PDF");
 
-        resultArea = new JTextArea();
-        resultArea.setEditable(false);
+        empname = new JLabel("Employee Name: ");
+        empid = new JLabel("Employee ID: ");
 
-        idLabel.setBounds(20, 20, 100, 20);
-        idField.setBounds(130, 20, 200, 20);
-        nameLabel.setBounds(20, 50, 100, 20);
-        nameField.setBounds(130, 50, 200, 20);
-        salaryLabel.setBounds(20, 80, 100, 20);
-        salaryField.setBounds(130, 80, 200, 20);
-        companyNameLabel.setBounds(30, 110, 200, 20);
-        dateLabel.setBounds(280, 110, 100, 20);
-        companyAddresslabel.setBounds(30, 150, 600, 20);
-        calculateButton.setBounds(150, 190, 100, 30);
-        generatePDFButton.setBounds(300, 190, 150, 30);
-        resultArea.setBounds(20, 230, 540, 200);
+        grossSalaryLabel = new JLabel("Gross Salary:");
+        hraLabel = new JLabel("HRA:");
+        taLabel = new JLabel("TA:");
+        maLabel = new JLabel("MA:");
+        daLabel = new JLabel("DA:");
+        pfLabel = new JLabel("PF:");
+        taxLabel = new JLabel("Tax:");
+        netSalaryLabel = new JLabel("Net Salary:");
 
-        add(idLabel);
-        add(idField);
-        add(nameLabel);
-        add(nameField);
-        add(salaryLabel);
-        add(salaryField);
-        add(calculateButton);
-        add(generatePDFButton);
-        add(resultArea);
-        add(companyNameLabel);
-        add(companyAddresslabel);
+        // Pre-filled company information
+        companyInfoLabelName = new JLabel("Company Name: DIT University");
+        companyInfoLabelEmail = new JLabel("Company: acad9@dituniversity.edu.in ");
+        companyInfoLabelAddress = new JLabel("Address: Mussoorie, Diversion Road, Uttarakhand 248009");
+        dateLabel = new JLabel("Date: " + getCurrentDate());
+    }
 
+    private void initLayout() {
+        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 5, 5));
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        inputPanel.add(idLabel);
+        inputPanel.add(idField);
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameField);
+        inputPanel.add(salaryLabel);
+        inputPanel.add(salaryField);
+        
+        JPanel calculatePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        calculatePanel.add(calculateButton);
+        
+        JPanel outputPanel = new JPanel(new GridLayout(12, 2, 5, 5)); // Increased rows to accommodate all payroll elements
+        outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        outputPanel.add(empname);
+        outputPanel.add(new JLabel()); //Empty Label for Emp Name
+        outputPanel.add(empid);
+        outputPanel.add(new JLabel()); //Empty Label for Emp id
+        outputPanel.add(grossSalaryLabel);
+        outputPanel.add(new JLabel()); // Empty label for Gross Salary value
+        outputPanel.add(hraLabel);
+        outputPanel.add(new JLabel()); // Empty label for HRA value
+        outputPanel.add(taLabel);
+        outputPanel.add(new JLabel()); // Empty label for TA value
+        outputPanel.add(maLabel);
+        outputPanel.add(new JLabel()); // Empty label for MA value
+        outputPanel.add(daLabel);
+        outputPanel.add(new JLabel()); // Empty label for DA value
+        outputPanel.add(pfLabel);
+        outputPanel.add(new JLabel()); // Empty label for PF value
+        outputPanel.add(taxLabel);
+        outputPanel.add(new JLabel()); // Empty label for Tax value
+        outputPanel.add(netSalaryLabel);
+        outputPanel.add(new JLabel()); // Empty label for Net Salary value
+        JPanel infoPanel = new JPanel(new GridLayout(4, 1));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10)); // Increased bottom margin
+        infoPanel.add(companyInfoLabelName);
+        infoPanel.add(companyInfoLabelEmail);
+        infoPanel.add(companyInfoLabelAddress);
+        infoPanel.add(dateLabel);
+        
+        // Divide input and output with horizontal line
+        JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
+        separator1.setPreferredSize(new Dimension(400, 1));
+        
+        // Divide output and company info with horizontal line
+        JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
+        separator2.setPreferredSize(new Dimension(400, 1));
+        
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(inputPanel, BorderLayout.NORTH);
+        mainPanel.add(separator1, BorderLayout.CENTER);
+        mainPanel.add(calculatePanel, BorderLayout.CENTER);
+        mainPanel.add(outputPanel, BorderLayout.AFTER_LAST_LINE);
+        mainPanel.add(separator2, BorderLayout.SOUTH);
+        mainPanel.add(infoPanel, BorderLayout.WEST); // Moved company details section below the output
+        
+        JPanel containerPanel = new JPanel(new BorderLayout());
+        containerPanel.add(mainPanel, BorderLayout.NORTH);
+        
+        // Heading Panel below the button
+        // JPanel headingPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // JLabel headingLabel = new JLabel("Payroll Details");
+        // headingLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        // headingPanel.add(headingLabel);
+        // // containerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
+        // containerPanel.add(headingPanel, BorderLayout.BEFORE_FIRST_LINE);
+        
+        // Increase frame size
+        setSize(800, 700);
+        
+        add(containerPanel);
+    }
+    
+    
+
+    private void addActionListeners() {
         calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 computeSalary();
             }
         });
-
-        generatePDFButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                generatePDF();
-            }
-        });
-
-        setVisible(true);
     }
 
     private void computeSalary() {
         try {
-            int id = Integer.parseInt(idField.getText());
-            String name = nameField.getText();
-            double basicSalary = Double.parseDouble(salaryField.getText());
-
+            String idText = idField.getText();
+            String name = properCase(nameField.getText());
+            String salaryText = salaryField.getText();
+    
+            // Check if any of the input fields are empty
+            if (idText.isEmpty() || name.isEmpty() || salaryText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in all the fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+    
+            int id = Integer.parseInt(idText);
+            double basicSalary = Double.parseDouble(salaryText);
+    
+            // Ensure basic salary is non-negative
+            if (basicSalary < 0) {
+                JOptionPane.showMessageDialog(this, "Basic salary cannot be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+    
             double hra = basicSalary * 0.50;
             double ta = basicSalary * 0.40;
             double ma = basicSalary * 0.25;
@@ -98,60 +167,33 @@ public class PayrollApplicationGUI extends JFrame {
             double gs = basicSalary + hra + da + ta + ma;
             double tax = computeTax(gs);
             double ns = gs - pf - tax;
-
-            resultArea.setText("");
-            resultArea.append("Employee ID: " + id + "\n");
-            resultArea.append("Employee Name: " + properCase(name) + "\n");
-            resultArea.append("Allowances:\t\t\t Deductions:\n");
-            resultArea.append(" HRA: " + currencyFormat(hra) +"\t\t\t  PF: " + currencyFormat(pf) + "\n");
-            resultArea.append(" DA: " + currencyFormat(da) +"\t\t\t  Tax: " + currencyFormat(tax) + "\n");
-            resultArea.append(" MA: " + currencyFormat(ma) + "\n");
-            resultArea.append(" TA: " + currencyFormat(ta) + "\n");
-            resultArea.append(" Gross Salary: " + currencyFormat(gs) + "\n");
-            resultArea.append("Net Salary: " + currencyFormat(ns) + "\n");
-            resultArea.setBounds(20, 230, 540, 300);
-            companyAddresslabel.setBounds(30, 150, 600, 20);
-            setSize(600, 500);
-            add(dateLabel);
+    
+            // Set computed values to labels
+            setLabelText(grossSalaryLabel, currencyFormat(gs));
+            setLabelText(hraLabel, currencyFormat(hra));
+            setLabelText(taLabel, currencyFormat(ta));
+            setLabelText(maLabel, currencyFormat(ma));
+            setLabelText(daLabel, currencyFormat(da));
+            setLabelText(pfLabel, currencyFormat(pf));
+            setLabelText(taxLabel, currencyFormat(tax));
+            setLabelText(netSalaryLabel, currencyFormat(ns));
+            setLabelText(empname, name);
+            setLabelText(empid, Integer.toString(id));
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter valid numeric values for ID and Salary.",
                     "Input Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private void generatePDF() {
-        try {
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("PayrollSlip.pdf"));
-            document.open();
-            document.add(new Paragraph(resultArea.getText()));
-            document.close();
-            JOptionPane.showMessageDialog(this, "PDF generated successfully.", "PDF Generation",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error generating PDF: " + ex.getMessage(),
-                    "PDF Generation Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private String properCase(String name) {
+    static String properCase(String name){
         String fullName = "";
         String names[] = name.split(" ");
-        for (int i = 0; i < names.length; i++) {
-            String n = String.valueOf(names[i].charAt(0)).toUpperCase() + names[i].substring(1).toLowerCase();
-            fullName = fullName + n + " ";
+        for(int i = 0; i<names.length; i++){
+            String n = String.valueOf(names[i].charAt(0))
+            .toUpperCase() + 
+            names[i].substring(1).toLowerCase();
+            fullName = fullName+n+" ";
         }
-        return fullName.trim();
-    }
-
-    private String currencyFormat(double val) {NumberFormat obj = NumberFormat.getCurrencyInstance(locale);
-        return obj.format(val);
-    }
-
-    private String dateFormat() {
-        Date date = new Date();
-        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
-        return df.format(date);
+        return fullName;
     }
 
     private double computeTax(double gs) {
@@ -166,7 +208,28 @@ public class PayrollApplicationGUI extends JFrame {
         return 0.0;
     }
 
+    private void setLabelText(JLabel label, String text) {
+        label.setText(label.getText() + " " + text);
+    }
+
+    private String currencyFormat(double val) {
+        Locale indiaLocale = new Locale("en", "IN");
+        NumberFormat obj = NumberFormat.getCurrencyInstance(indiaLocale);
+        return obj.format(val);
+    }
+    
+    private String getCurrentDate() {
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("en", "IN"));
+        return dateFormat.format(new Date());
+    }
+    
+
     public static void main(String[] args) {
-        new PayrollApplication();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new PayrollApplicationGUI();
+            }
+        });
     }
 }
