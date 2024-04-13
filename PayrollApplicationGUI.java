@@ -22,7 +22,7 @@ public class PayrollApplicationGUI extends JFrame {
 
     public PayrollApplicationGUI() {
         setTitle("Payroll Application");
-        setSize(1080, 720);
+        setSize(1080, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); 
         setResizable(false);
@@ -109,7 +109,7 @@ public class PayrollApplicationGUI extends JFrame {
         separator3.setBounds(15,585,1000,1);
         netSalaryLabel.setFont(new Font("Arial", Font.BOLD, 14));
         netSalaryLabel.setBounds(20, 600, 200, 30);
-        netSalaryWordsLabel.setBounds(20, 640, 600, 30);
+        netSalaryWordsLabel.setBounds(20, 640, 800, 60);
         netSalaryWordsLabel.setFont(new Font("Arial", Font.BOLD, 14));
         separator2.setBounds(250, 380, 1, 150);
         deduction.setBounds(400, 330, 200, 30);
@@ -270,48 +270,39 @@ public class PayrollApplicationGUI extends JFrame {
         } while (number > 0);
         return (prefix + current).trim();
     }
-
-    private String convertLessThanOneThousand(int number) {
-        final String[] units = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
-        final String[] teens = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
-                "Seventeen", "Eighteen", "Nineteen" };
-        final String[] tens = { "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty",
-                "Ninety" };
-        String current;
-        if (number % 100 < 10) {
-            current = units[number % 10];
-            number /= 10;
-        } else if (number % 100 < 20) {
-            current = teens[number % 10];
-            number /= 100;
-        } else {
-            current = units[number % 10];
-            number /= 10;
-            current = tens[number % 10] + current;
-            number /= 10;
-        }
-        if (number == 0)
-            return current;
-        return units[number] + " Hundred " + current;
-    }
-
+    
     private String placeToWord(int place) {
-        switch (place) {
-            case 1:
-                return " Thousand ";
-            case 2:
-                return " Million ";
-            case 3:
-                return " Billion ";
-            case 4:
-                return " Trillion ";
-            case 5:
-                return " Quadrillion ";
-            default:
-                return "";
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'placeToWord'");
+    }
+    private String convertLessThanOneThousand(int number) {
+        if (number >= 0 && number < 1000) {
+            final String[] units = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+            final String[] teens = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+                    "Seventeen", "Eighteen", "Nineteen" };
+            final String[] tens = { "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty",
+                    "Ninety" };
+            String current;
+            if (number % 100 < 10) {
+                current = units[number % 10];
+                number /= 10;
+            } else if (number % 100 < 20) {
+                current = teens[number % 10];
+                number /= 100;
+            } else {
+                current = units[number % 10];
+                number /= 10;
+                current = tens[number % 10] + current;
+                number /= 10;
+            }
+            if (number == 0)
+                return current;
+            return units[number] + " Hundred " + current;
+        } else {
+            return ""; // Return an empty string if number is out of range
         }
     }
-
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
